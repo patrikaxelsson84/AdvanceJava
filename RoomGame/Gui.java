@@ -57,8 +57,16 @@ public class Gui extends JFrame {
     }
 
     //Add person to room
-    public void setPerson(Person p){
+    public void setPerson(Person[] p){
         this.showPersons.setText(p.toString());
+
+            String person = "";
+            for (Npc npc : p) {
+                if (npc == null) continue;
+                person += npc.toString();
+            }
+            this.showPersons.setText("Du ser "+person);
+
     }
 
 //Nedantåenda spaghetti är inte vacker...

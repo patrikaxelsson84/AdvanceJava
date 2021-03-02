@@ -1,3 +1,6 @@
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 public class Game {
     private Gui gui;
     private Room room1, room2, room3, room4;
@@ -36,15 +39,20 @@ public class Game {
         room4.addObject(Furnance);
         room4.addObject(Knife);
 
-        Person Jason = new Person("Jason",0);
-        Person Freddy = new Person("Freddy",0);
-        Person TureSventon = new Person("Ture Sventon",0);
+        Person Jason = new Person("Jason",0, this);
+        Person Freddy = new Person("Freddy",0, this);
+        Person TureSventon = new Person("Ture Sventon",0, this);
         Player player = new Player();
+
+        ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(3);
+        pool.scheduleAtFixedRate(Jason, 5, 12, TimeUnit.SECONDS);
+        pool.scheduleAtFixedRate(Freddy, 5, 12, TimeUnit.SECONDS);
+        pool.scheduleAtFixedRate(TureSventon, 5, 12, TimeUnit.SECONDS);
 
         room2.addNpc(Jason);
         room3.addNpc(Freddy);
         room4.addNpc(TureSventon);
-        
+
 
         Jason.getInventory().addObject(null);
         Freddy.getInventory().addObject(null);
@@ -69,6 +77,7 @@ public class Game {
 
         //Starta guit!
         this.gui = new Gui();
+
         //System.out.println(map[1]);
         //gui.setShowRoom(map[1].toString());
         int position = 0;
@@ -115,5 +124,7 @@ public class Game {
             System.out.println(command);
         }*/
     }
-
+    public Room getRoom(int i){
+        return map[i];
+    }
 }

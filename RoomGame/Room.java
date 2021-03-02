@@ -10,13 +10,25 @@ public class Room {
         this.description= roomDescription;
         this.inventory = new Inventory(10);
     }
-    public void addNpc(Person person) {
-
-        this.person[0] = person; //TODO Fixa fler personer
+    public boolean addNpc(Person person){
+        int i = FirstEmpty();
+        if  (i == -1){
+            return false;
+        }
+        this.person[i] = person;
+        return true;
+    }
+    private int FirstEmpty(){
+        for (int i = 0; i<this.person.length;i++){
+            if (this.person[i] == null){
+                return i;
+            }
+        }
+        return -1;
     }
 
-    public Person getPersons(){
-        return this.person[0];
+    public Person[] getPersons(){
+        return this.person;
     }
     public void addObject(GameObject go){
         this.inventory.addObject(go);
@@ -24,6 +36,11 @@ public class Room {
     public String toString(){
         return name+" : "+description +"\n" +inventory;
     }
-
-
+    public void removeNpc(Npc npc){
+        for (int i = 0; i<this.person.length;i++){
+            if (this.person[i] == npc){
+                this.person[i] = null;
+            }
+        }
+    }
 }
